@@ -11,7 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // aqui creo que va el codigo que paso en classroom
+        Schema::create('usuarios', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('usuarios');
     }
 };
