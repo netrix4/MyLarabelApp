@@ -1,15 +1,18 @@
-<!-- resources/views/usuarios/create.blade.php -->
-
-@extends('layouts.app') <!-- Ajusta el nombre según tu estructura de layouts -->
+@extends('layouts.app') 
 
 @section('content')
     <h1>Crear Nuevo Usuario</h1>
-
+    <!-- <link rel="stylesheet" href="../../css/app.css"> -->
+    <!-- <link rel="stylesheet" href="app.css"> -->
+    
     <!-- Formulario para crear usuarios -->
     <form method="POST" action="{{ route('usuarios.store') }}">
         @csrf
 
         <!-- Campos del formulario -->
+        <!-- <label for="IdU">Id:</label>
+        <input type="text" name="idU" id="IdU" required> -->
+
         <label for="nombreU">Nombre:</label>
         <input type="text" name="nombreU" id="nombreU" required>
 
@@ -29,10 +32,13 @@
         <input type="text" name="direccion" id="direccion" required>
 
         <label for="TipoDeUsuario">Tipo de Usuario:</label>
-        <input type="text" name="TipoDeUsuario" id="TipoDeUsuario" required>
+        <!-- <input type="text" name="TipoDeUsuario" id="TipoDeUsuario" required> -->
+        <select name="TipoDeUsuario" id="TipoDeUsuario">
+            <option value="cliente">Cliente</option>
+            <option value="veterinario">Veterinario</option>
+        </select>
 
-        <!-- Otros campos según sea necesario -->
 
-        <button type="submit">Crear Usuario</button>
+        <button class='' type="submit" >Crear Usuario</button>
     </form>
 @endsection

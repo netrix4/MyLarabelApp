@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Usuario;
+use App\Models\Usuarios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+// use App\http\Controllers\HomeController;
 
 class UsuariosController extends Controller
 {
@@ -28,7 +29,8 @@ class UsuariosController extends Controller
         ]);
 
         // Crear y almacenar el nuevo usuario en la base de datos
-        $usuario = new User([
+        $usuario = new Usuarios([
+            'IdU' =>$request-> input('IdU'),
             'nombreU' => $request->input('nombreU'),
             'apapU' => $request->input('apapU'),
             'apamU' => $request->input('apamU'),
@@ -38,10 +40,9 @@ class UsuariosController extends Controller
             'TipoDeUsuario' => $request->input('TipoDeUsuario'),
         ]);
 
-        $usuario->password = Hash::make('contrasena_predeterminada');
-
         $usuario->save();
 
         return redirect()->route('usuarios.create')->with('success', 'Usuario creado con éxito');
+        // return redirect()->route('/');
     }
 }

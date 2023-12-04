@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cita;
-use App\Models\Usuario;
-use App\Models\Mascota;
+use App\Models\Citas;
+use App\Models\Usuarios;
+use App\Models\Mascotas;
 use Illuminate\Http\Request;
 
 class CitasController extends Controller
@@ -13,9 +13,9 @@ class CitasController extends Controller
     public function create()
     {
         // Lógica para obtener usuarios que no son clientes
-        $usuarios = Usuario::where('TipoDeUsuario', '!=', 'Cliente')->get();
+        $usuarios = Usuarios::where('TipoDeUsuario', '!=', 'Cliente')->get();
         // Lógica para obtener mascotas (puedes personalizar según tus necesidades)
-        $mascotas = Mascota::all();
+        $mascotas = Mascotas::all();
 
         return view('citas.create', compact('usuarios', 'mascotas'));
     }
@@ -32,7 +32,7 @@ class CitasController extends Controller
         ]);
 
         // Crear y almacenar la nueva cita en la base de datos
-        $cita = new Cita([
+        $cita = new Citas([
             'hora' => $request->input('hora'),
             'fecha' => $request->input('fecha'),
             'idM' => $request->input('idM'),

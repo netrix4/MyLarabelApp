@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Mascota;
-use App\Models\Usuario;
+use App\Models\Mascotas;
+use App\Models\Usuarios;
 use Illuminate\Http\Request;
 
 class MascotasController extends Controller
@@ -11,7 +11,7 @@ class MascotasController extends Controller
     public function asignarMascota()
 {
     // Lógica para obtener usuarios tipo cliente
-    $clientes = Usuario::where('TipoDeUsuario', 'Cliente')->get();
+    $clientes = Usuarios::where('TipoDeUsuario', 'Cliente')->get();
 
     return view('mascotas.asignar', compact('clientes'));
 }
@@ -26,7 +26,7 @@ public function almacenarAsignacion(Request $request)
         ]);
 
         // Crea una nueva mascota 
-        $mascota = new Mascota([
+        $mascota = new Mascotas([
             'nombreM' => $request->input('nombreM'),
             'especie' => $request->input('especie'),
             'raza' => $request->input('raza'),
@@ -35,7 +35,7 @@ public function almacenarAsignacion(Request $request)
         ]);
 
         // Asigna la mascota al usuario
-        $usuario = Usuario::find($request->input('cliente'));
+        $usuario = Usuarios::find($request->input('cliente'));
         $usuario->mascotas()->save($mascota);
 
         return redirect()->route('mascotas.asignar')->with('success', 'Mascota asignada con éxito');
