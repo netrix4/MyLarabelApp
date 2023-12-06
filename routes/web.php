@@ -1,60 +1,26 @@
 <?php
-
+use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\MascotasController;
+use App\Http\Controllers\CitasController;
+// use App\http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-/*
+
 Route::get('/', function () {
-    return view('welcome');
- 
-});*/
-   /** 
-Route::get('/prueba', function () {
-    echo"Esto es una simple prueba!!";
+    return view('home');
 });
 
-Route::get('colaboradores/{nombre}', function($nombre){
-	return "Mostrando el colaborador $nombre";
+Route::middleware([])->group(function () {
+    // Route::get('/', [HomeController::class, 'redirect'])->name('home');
+    Route::get('/usuarios/create', [UsuariosController::class, 'create'])->name('usuarios.create');
+    Route::post('/usuarios', [UsuariosController::class, 'store'])->name('usuarios.store');
+
+    Route::get('/mascotas/asignar', [MascotasController::class, 'asignarMascota'])->name('mascotas.asignar');
+    // Route::post('/mascotas/asignar', [MascotasController::class, 'almacenarAsignacion'])->name('mascotas.almacenarAsignacion');
+    Route::post('/mascotas', [MascotasController::class, 'almacenarAsignacion'])->name('mascotas.almacenarAsignacion');
+    
+    Route::get('/citas/create', [CitasController::class, 'create'])->name('citas.create');
+    Route::post('/citas', [CitasController::class, 'store'])->name('citas.store');
 });
 
-Route::get('vista', function () {
-    return view('ejemplo');
-});
-
-Route::get('vista/{enero},{anio},{evento}', function ($mes,$anio,$eventos) {
-    return view('ejemplo', [
-    	'mes' => $mes,
-    	'ano' => $anio,
-    	'eventos' => $eventos]);
-       
-}); 
-
-Route::get('articulos', function(){
-	dd(\App\Articulos::all());
-});**/
-
-// returns the home page with all posts
-Route::get('/', PostController::class .'@index')->name('posts.index');
-// returns the form for adding a post
-Route::get('/posts/create', PostController::class . '@create')->name('posts.create');
-// adds a post to the database
-Route::post('/posts', PostController::class .'@store')->name('posts.store');
-// returns a page that shows a full post
-Route::get('/posts/{post}', PostController::class .'@show')->name('posts.show');
-// returns the form for editing a post
-Route::get('/posts/{post}/edit', PostController::class .'@edit')->name('posts.edit');
-// updates a post
-Route::put('/posts/{post}', PostController::class .'@update')->name('posts.update');
-// deletes a post
-Route::delete('/posts/{post}', PostController::class .'@destroy')->name('posts.destroy');
-
+require __DIR__.'/auth.php';
 
