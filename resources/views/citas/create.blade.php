@@ -40,7 +40,7 @@
                 <button type="submit">Crear Cita</button>
             </form>
             <form class='option-form' action="{{ route('mascotas.asignar') }}">
-                <button type='submit' id='home' name='home'>Agregar Mascota</button>
+                <button type='submit' id='home' name='home'>Ir a Agregar Mascota</button>
             </form>
         </div>
     </div>

@@ -36,7 +36,7 @@
                 <button type="submit">Asignar Mascota</button>
             </form>
             <form class='option-form' action="{{ route('usuarios.create') }}">
-                <button type='submit' id='home' name='home'>Agregar Usuario</button>
+                <button type='submit' id='home' name='home'>Ir a Agregar Usuario</button>
             </form>
         </div>
     </div>

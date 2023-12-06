@@ -27,7 +27,7 @@ class CitasController extends Controller
         $request->validate([
             'hora' => 'required',
             'fecha' => 'required|date',
-            'idM' => 'required|exists:mascotas,id',
+            'idM' => 'required|exists:mascotas,idM',
             'idU' => 'required|exists:usuarios,IdU',
         ]);
 
