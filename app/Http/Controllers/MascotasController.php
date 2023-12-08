@@ -15,6 +15,10 @@ class MascotasController extends Controller
 
         return view('mascotas.asignar', compact('clientes'));
     }
+    public function getMascotas(){
+        $mascotasTable = Mascotas::all();
+        // return view('mascotas.asignar', compact('clientes'));
+    }
     public function almacenarAsignacion(Request $request)
     {
         $request->validate([

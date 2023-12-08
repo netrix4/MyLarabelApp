@@ -5,6 +5,8 @@ use App\Http\Controllers\CitasController;
 // use App\http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ConsultaController;
+
 Route::get('/', function () {
     return view('home');
 });
@@ -20,6 +22,10 @@ Route::middleware([])->group(function () {
     
     Route::get('/citas/create', [CitasController::class, 'create'])->name('citas.create');
     Route::post('/citas', [CitasController::class, 'store'])->name('citas.store');
+
+    Route::get('/consultar/usuarios', [ConsultaController::class, 'verUsuarios'])->name('consultar.usuarios'); 
+    Route::get('/consultar/mascotas', [ConsultaController::class, 'verMascotas'])->name('consultar.mascotas'); 
+    Route::get('/consultar/citas', [ConsultaController::class, 'verCitas'])->name('consultar.citas');
 });
 
 require __DIR__.'/auth.php';

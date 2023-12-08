@@ -21,10 +21,11 @@ body{
     box-shadow: 0 10px 12px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     background-color: var(--card-element-header-bakcgorund-color);
-    width: 325px;
+    width: 500px;
     height: fit-content;
-
-	max-width: 40%;
+	width: fit-content;
+	min-width: 325px;
+	/* max-width: 40%; */
 
 }
 .card-element-header{
@@ -49,7 +50,9 @@ body{
     padding: 32px;
     gap: 12px;
 
-	max-width: 650px;
+	width: fit-content;
+	min-width: 325px;
+	max-width: inherit;
 }
 .card-element-content > p {
 	align-content: center;
