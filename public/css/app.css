@@ -1,6 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 :root{
     --card-element-header-bakcgorund-color: rgb(215, 213, 213);
