@@ -98,6 +98,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
+	align-items: center;
 }
 .option-form > label{
     text-align: center;

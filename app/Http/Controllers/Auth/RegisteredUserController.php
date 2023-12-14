@@ -11,17 +11,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
-use Inertia\Inertia;
-use Inertia\Response;
+use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
      */
-    public function create(): Response
+    public function create(): View
     {
-        return Inertia::render('Auth/Register');
+        return view('auth.register');
     }
 
     /**
@@ -32,14 +31,24 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'name' => ['required', 'string', 'max:255'],
+            'apellido_paterno' => ['required', 'string', 'max:255'],
+            'apellido_materno' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'telefono' => ['required', 'string', 'max:20'],
+            'direccion' => ['required', 'string', 'max:255'],
+            'tipo_usuario' => ['required', 'string', 'in:Cliente,Admin'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'apellido_paterno' => $request->apellido_paterno,
+            'apellido_materno' => $request->apellido_materno,
             'email' => $request->email,
+            'telefono' => $request->telefono,
+            'direccion' => $request->direccion,
+            'tipo_usuario' => $request->tipo_usuario,
             'password' => Hash::make($request->password),
         ]);
 
@@ -47,6 +56,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('index');
     }
 }
+

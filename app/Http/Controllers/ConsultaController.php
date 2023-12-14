@@ -1,26 +1,46 @@
 <?php
+
 namespace App\Http\Controllers;
-use App\Models\Usuarios;
-use App\Models\Mascotas;
-use App\Models\Citas;
+
+use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Mascota;
+use App\Models\Cita;
+use Illuminate\Support\Facades\Auth;
 
 class ConsultaController extends Controller
 {
-    public function verUsuarios()
+    public function verInfoCliente()
     {
-        $usuarios = Usuarios::all();
-        return view('consultar.usuarios', compact('usuarios'));
+        $user = Auth::user();
+
+        if ($user->tipo_usuario === 'Cliente') {
+            $mascotas = $user->mascotas;
+            $citas = $user->citas;
+
+            return view('consultas.info_cliente', compact('user', 'mascotas', 'citas'));
+        }
+
+        return redirect()->route('index')->with('error', 'No tienes permisos para acceder a esta información.');
     }
 
-    public function verMascotas()
+    public function verInfoAdmin()
     {
-        $mascotas = Mascotas::all();
-        return view('consultar.mascotas', compact('mascotas'));
-    }
+        $user = Auth::user();
 
-    public function verCitas()
+        if ($user->tipo_usuario === 'Admin') {
+            $mascotas = Mascota::all();
+            $citas = Cita::all();
+            $usuarios = User::all();
+
+            return view('consultas.info_admin', compact('mascotas', 'citas', 'usuarios'));
+        }
+
+        return redirect()->route('index')->with('error', 'No tienes permisos para acceder a esta información.');
+    }
+    
+    public function volverIndex()
     {
-        $citas = Citas::all();
-        return view('consultar.citas', compact('citas'));
+        return redirect()->route('index');
     }
 }

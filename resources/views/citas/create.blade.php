@@ -1,48 +1,53 @@
-@extends('layouts.app') <!-- Ajusta el nombre según tu estructura de layouts -->
+@extends('layouts.app')
 
 @section('content')
-
-    <div class='card-element-wrapper'>
-        <div class='card-element-header'>
+    <div class="card-element-wrapper">
+        <div class="card-element-header">
             <h2>Crear Nueva Cita</h2>
         </div>
-        
-        <!-- <link rel="stylesheet" href="{{ asset('../css/app.css') }}"></link> -->
-        <div class='card-element-content'>
+
+        <div class="card-element-content">
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <form class='option-form' method='POST' action="{{ route('citas.store') }}">
                 @csrf
+                <label for="nombre_mascota">Nombre de la Mascota</label>
+                <!-- <input type="text" name="nombre_mascota" id="nombre_mascota" class="form-control" required> -->
 
-                <!-- Campos del formulario -->
-                <label for="hora">Hora:</label>
-                <input type="time" name="hora" id="hora" required>
+                <select name="nombre_mascota" id="nombre_mascota" required>
+                @foreach ($activeUsersPets as $pet)
+                    <option value="{{ $pet->nombre }}"> {{ $pet->nombre }}</option>
+                @endforeach
+                </select>
 
+                <label for="especie">Especie</label>
+                <!-- <label for="especie">$activeUsersPets</label> -->
+                <input type="text" name="especie" id="especie" class="form-control" required>
+                
                 <label for="fecha">Fecha:</label>
                 <input type="date" name="fecha" id="fecha" required>
 
-                <!-- Lógica para mostrar usuarios y permitir la selección -->
-                <label for="idU">Selecciona un Usuario:</label>
-                <select name="idU" id="idU">
-                    @foreach ($usuarios as $usuario)
-                        <option value="{{ $usuario->IdU }}">{{ $usuario->nombreU }}</option>
-                    @endforeach
-                </select>
+                <label for="hora">Hora:</label>
+                <input type="time" name="hora" id="hora" required>
 
-                <!-- Lógica para mostrar mascotas y permitir la selección -->
-                <label for="idM">Selecciona una Mascota:</label>
-                <select name="idM" id="idM">
-                    @foreach ($mascotas as $mascota)
-                        <option value="{{ $mascota->idM }}">{{ $mascota->nombreM }}</option>
-                    @endforeach
-                </select>
-
-                <!-- Otros campos según sea necesario -->
+                <label for="descripcion">Descripción</label>
+                <textarea name="descripcion" id="descripcion" class="form-control"></textarea>
 
                 <button type="submit">Crear Cita</button>
             </form>
-            <form class='option-form' action="{{ route('mascotas.asignar') }}">
-                <button type='submit' id='home' name='home'>Ir a Agregar Mascota</button>
+            <form method='GET' action="{{ route('index') }}">
+                <button class="button-generic" type="submit">Home</button>
             </form>
         </div>
     </div>
-
 @endsection

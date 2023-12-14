@@ -1,31 +1,31 @@
 <?php
-use App\Http\Controllers\UsuariosController;
-use App\Http\Controllers\MascotasController;
-use App\Http\Controllers\CitasController;
-// use App\http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\MascotaController;
+use App\Http\Controllers\CitaController;
 use App\Http\Controllers\ConsultaController;
 
 Route::get('/', function () {
-    return view('home');
+    return view('index');
 });
 
-Route::middleware([])->group(function () {
-    // Route::get('/', [HomeController::class, 'redirect'])->name('home');
-    Route::get('/usuarios/create', [UsuariosController::class, 'create'])->name('usuarios.create');
-    Route::post('/usuarios', [UsuariosController::class, 'store'])->name('usuarios.store');
+Route::get('/index', function () {
+    return view('index');
+})->middleware(['auth', 'verified'])->name('index');
 
-    Route::get('/mascotas/asignar', [MascotasController::class, 'asignarMascota'])->name('mascotas.asignar');
-    // Route::post('/mascotas/asignar', [MascotasController::class, 'almacenarAsignacion'])->name('mascotas.almacenarAsignacion');
-    Route::post('/mascotas', [MascotasController::class, 'almacenarAsignacion'])->name('mascotas.almacenarAsignacion');
-    
-    Route::get('/citas/create', [CitasController::class, 'create'])->name('citas.create');
-    Route::post('/citas', [CitasController::class, 'store'])->name('citas.store');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/consultar/usuarios', [ConsultaController::class, 'verUsuarios'])->name('consultar.usuarios'); 
-    Route::get('/consultar/mascotas', [ConsultaController::class, 'verMascotas'])->name('consultar.mascotas'); 
-    Route::get('/consultar/citas', [ConsultaController::class, 'verCitas'])->name('consultar.citas');
+    Route::get('/mascotas/create', [MascotaController::class, 'create'])->name('mascotas.create');
+    Route::post('/mascotas/store', [MascotaController::class, 'store'])->name('mascotas.store');
+
+    Route::get('/citas/create', [CitaController::class, 'create'])->name('citas.create');
+    Route::post('/citas/store', [CitaController::class, 'store'])->name('citas.store');
+
+    Route::get('/consultas/info-cliente', [ConsultaController::class, 'verInfoCliente'])->name('consultas.infoCliente');
+    Route::get('/consultas/info-admin', [ConsultaController::class, 'verInfoAdmin'])->name('consultas.infoAdmin');
 });
 
 require __DIR__.'/auth.php';
